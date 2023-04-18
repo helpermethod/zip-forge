@@ -29,6 +29,7 @@ public class DirectoryNode implements Node {
 
     public DirectoryNode directory(String name, Consumer<DirectoryNode> block) {
         String path = this.path + (name.endsWith("/") ? name : name + "/");
+
         DirectoryNode zipParentNode = new DirectoryNode(path);
         block.accept(zipParentNode);
 

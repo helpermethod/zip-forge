@@ -130,6 +130,23 @@ class ZipMoldTest {
                 ),
                 arguments(
                     (Consumer<RootNode>) r ->
+                        r
+                            .file("a.txt", "a")
+                            .directory(
+                                "d",
+                                d ->
+                                    d.directory(
+                                        "e",
+                                        e ->
+                                            e
+                                                .file("b.txt", "b")
+                                                .file("c.txt", "c")
+                                    )
+                            ),
+                    List.of("a.txt", "d/", "d/e/", "d/e/b.txt", "d/e/c.txt")
+                ),
+                arguments(
+                    (Consumer<RootNode>) r ->
                         r.file("a.txt", "a").directory("d", d -> {}),
                     List.of("a.txt", "d/")
                 ),
@@ -155,6 +172,19 @@ class ZipMoldTest {
                 arguments(
                     (Consumer<RootNode>) r ->
                         r.directory("d", d -> d.file("a.txt", "a")),
+                    List.of("a".getBytes(UTF_8))
+                ),
+                arguments(
+                    (Consumer<RootNode>) r ->
+                        r.directory(
+                            "d",
+                            d -> d.directory("e", e -> e.file("a", "a"))
+                        ),
+                    List.of("a".getBytes(UTF_8))
+                ),
+                arguments(
+                    (Consumer<RootNode>) r ->
+                        r.file("a.txt", "a".getBytes(UTF_8)),
                     List.of("a".getBytes(UTF_8))
                 )
             );
