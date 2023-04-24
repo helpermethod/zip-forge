@@ -28,9 +28,7 @@ public class RootNode implements Node {
     }
 
     public RootNode directory(String name, Consumer<DirectoryNode> block) {
-        DirectoryNode zipParentNode = new DirectoryNode(
-            name.endsWith("/") ? name : name + "/"
-        );
+        DirectoryNode zipParentNode = new DirectoryNode(name.endsWith("/") ? name : name + "/");
         block.accept(zipParentNode);
 
         children.add(zipParentNode);

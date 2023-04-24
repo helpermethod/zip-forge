@@ -33,8 +33,4 @@ class ZipFileVisitor implements Visitor {
             node.accept(this);
         }
     }
-
-    private static boolean isRoot(DirectoryNode directory) {
-        return directory.name().isEmpty();
-    }
 }

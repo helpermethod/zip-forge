@@ -1,0 +1,33 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release version
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: |
+            8
+            17
+          cache: maven
+      - name: Build
+        run: ./mvnw verify --no-transfer-progress

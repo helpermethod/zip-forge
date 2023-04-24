@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.helpermethod</groupId>
     <artifactId>zip-mold</artifactId>
     <version>0.1.0</version>
 
+    <name>${project.artifactId}</name>
+    <description>A declarative Java DSL for creating ZIP files</description>
+    <url>https://github.com/helpermethod/zip-mold</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Oliver Weiler</name>
+            <email>wo6980@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:${repository.url}</connection>
+        <developerConnection>scm:git:${repository.url}</developerConnection>
+        <tag>HEAD</tag>
+        <url>${repository.url}</url>
+    </scm>
+
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <maven.compiler.testRelease>20</maven.compiler.testRelease>
+        <java.version>8</java.version>
+        <java.testVersion>17</java.testVersion>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.testRelease>${java.testVersion}</maven.compiler.testRelease>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <repository.url>git@github.com:helpermethod/zip-mold.git</repository.url>
     </properties>
 
     <dependencies>
@@ -39,13 +66,13 @@
                 <executions>
                     <execution>
                         <id>default-testCompile</id>
-                        <phase>test-compile</phase>
                         <goals>
                             <goal>testCompile</goal>
                         </goals>
+                        <phase>test-compile</phase>
                         <configuration>
                             <jdkToolchain>
-                                <version>17</version>
+                                <version>${java.testVersion}</version>
                             </jdkToolchain>
                         </configuration>
                     </execution>
@@ -57,14 +84,14 @@
                 <version>3.0.0</version>
                 <configuration>
                     <jdkToolchain>
-                        <version>17</version>
+                        <version>${java.testVersion}</version>
                     </jdkToolchain>
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.mvnsearch</groupId>
-                <artifactId>toolchains-maven-plugin</artifactId>
-                <version>4.5.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-toolchains-plugin</artifactId>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -75,13 +102,8 @@
                 <configuration>
                     <toolchains>
                         <jdk>
-                            <vendor>temurin</vendor>
                             <version>8</version>
                         </jdk>
-                        <testJdk>
-                            <vendor>temurin</vendor>
-                            <version>20</version>
-                        </testJdk>
                     </toolchains>
                 </configuration>
             </plugin>
@@ -91,18 +113,14 @@
                 <version>2.35.0</version>
                 <configuration>
                     <java>
-                        <prettier>
-                            <devDependencies>
-                                <prettier>2.8.4</prettier>
-                                <prettier-plugin-java>2.1.0</prettier-plugin-java>
-                            </devDependencies>
-                            <config>
-                                <printWitd>120</printWitd>
-                                <tabWidth>4</tabWidth>
-                                <parser>java</parser>
-                            </config>
-                        </prettier>
+                        <palantirJavaFormat/>
                     </java>
+                    <pom>
+                        <sortPom>
+                            <expandEmptyElements>false</expandEmptyElements>
+                            <nrOfIndentSpace>4</nrOfIndentSpace>
+                        </sortPom>
+                    </pom>
                 </configuration>
             </plugin>
         </plugins>
