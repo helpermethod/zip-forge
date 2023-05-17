@@ -1,6 +1,8 @@
 package com.github.helpermethod.zip_mold;
 
 import static com.github.helpermethod.zip_mold.ZipMold.createZipFile;
+import static com.github.helpermethod.zip_mold.ZipMold.directory;
+import static com.github.helpermethod.zip_mold.ZipMold.file;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.function.Predicate.not;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,7 +11,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -31,11 +32,11 @@ class ZipMoldTest {
 
         @ArgumentsSource(ZipFileEntries.class)
         @ParameterizedTest
-        void should_create_a_zip_file_with_the_correct_entries(
-                Consumer<RootNode> block, List<String> entries, @TempDir Path tempDir) throws IOException {
+        void should_create_a_zip_file_with_correct_entries(
+                NodeGroup nodeGroup, List<String> entries, @TempDir Path tempDir) throws IOException {
             var location = tempDir.resolve("test.zip");
 
-            createZipFile(location, block);
+            createZipFile(location, nodeGroup);
 
             try (var zipFile = new ZipFile(location.toFile())) {
                 assertThat(zipFile.stream()).extracting("name").isEqualTo(entries);
@@ -44,11 +45,11 @@ class ZipMoldTest {
 
         @ArgumentsSource(ZipFileContents.class)
         @ParameterizedTest
-        void shoud_create_a_zip_file_with_the_correct_contents(
-                Consumer<RootNode> block, List<byte[]> fileContents, @TempDir Path tempDir) throws IOException {
+        void shoud_create_a_zip_file_with_correct_contents(
+                NodeGroup nodeGroup, List<byte[]> fileContents, @TempDir Path tempDir) throws IOException {
             var location = tempDir.resolve("test.zip");
 
-            createZipFile(location, block);
+            createZipFile(location, nodeGroup);
 
             try (var zipFile = new ZipFile(location.toFile())) {
                 var contents = zipFile.stream()
@@ -70,42 +71,55 @@ class ZipMoldTest {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments((Consumer<RootNode>) r -> r.file("a.txt", "a"), List.of("a.txt")),
+                        arguments((NodeGroup) () -> file("a.txt", "a"), List.of("a.txt")),
                         arguments(
-                                (Consumer<RootNode>) r -> r.file("a.txt", "a").file("b.txt", "b"),
+                                (NodeGroup) () -> {
+                                    file("a.txt", "a");
+                                    file("b.txt", "b");
+                                },
                                 List.of("a.txt", "b.txt")),
-                        arguments((Consumer<RootNode>) r -> r.directory("d", d -> {}), List.of("d/")),
-                        arguments((Consumer<RootNode>) r -> r.directory("d/", d -> {}), List.of("d/")),
+                        arguments((NodeGroup) () -> directory("d", () -> {}), List.of("d/")),
+                        arguments((NodeGroup) () -> directory("d/", () -> {}), List.of("d/")),
+                        arguments((NodeGroup) () -> directory("d", () -> file("a.txt", "a")), List.of("d/", "d/a.txt")),
                         arguments(
-                                (Consumer<RootNode>) r -> r.directory("d", d -> d.file("a.txt", "a")),
-                                List.of("d/", "d/a.txt")),
-                        arguments(
-                                (Consumer<RootNode>) r -> r.directory(
-                                        "d", d -> d.file("a.txt", "a").file("b.txt", "b")),
+                                (NodeGroup) () -> directory("d", () -> {
+                                    file("a.txt", "a");
+                                    file("b.txt", "b");
+                                }),
                                 List.of("d/", "d/a.txt", "d/b.txt")),
                         arguments(
-                                (Consumer<RootNode>)
-                                        r -> r.directory("d", d -> d.directory("e", e -> e.file("a.txt", "a"))),
+                                (NodeGroup) () -> directory("d", () -> directory("e", () -> file("a.txt", "a"))),
                                 List.of("d/", "d/e/", "d/e/a.txt")),
                         arguments(
-                                (Consumer<RootNode>) r -> r.directory(
+                                (NodeGroup) () -> directory(
                                         "d",
-                                        d -> d.directory(
-                                                "e", e -> e.file("a.txt", "a").file("b.txt", "b"))),
+                                        () -> directory("e", () -> {
+                                            file("a.txt", "a");
+                                            file("b.txt", "b");
+                                        })),
                                 List.of("d/", "d/e/", "d/e/a.txt", "d/e/b.txt")),
                         arguments(
-                                (Consumer<RootNode>) r -> r.file("a.txt", "a")
-                                        .directory(
-                                                "d",
-                                                d -> d.directory("e", e -> e.file("b.txt", "b")
-                                                        .file("c.txt", "c"))),
+                                (NodeGroup) () -> {
+                                    file("a.txt", "a");
+                                    directory(
+                                            "d",
+                                            () -> directory("e", () -> {
+                                                file("b.txt", "b");
+                                                file("c.txt", "c");
+                                            }));
+                                },
                                 List.of("a.txt", "d/", "d/e/", "d/e/b.txt", "d/e/c.txt")),
                         arguments(
-                                (Consumer<RootNode>) r -> r.file("a.txt", "a").directory("d", d -> {}),
+                                (NodeGroup) () -> {
+                                    file("a.txt", "a");
+                                    directory("d", () -> {});
+                                },
                                 List.of("a.txt", "d/")),
                         arguments(
-                                (Consumer<RootNode>)
-                                        r -> r.directory("d", d -> {}).directory("e", e -> {}),
+                                (NodeGroup) () -> {
+                                    directory("d", () -> {});
+                                    directory("e", () -> {});
+                                },
                                 List.of("d/", "e/")));
             }
         }
@@ -114,20 +128,20 @@ class ZipMoldTest {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments((Consumer<RootNode>) r -> r.file("a.txt", "a"), List.of("a".getBytes(UTF_8))),
+                        arguments((NodeGroup) () -> file("a.txt", "a"), List.of("a".getBytes(UTF_8))),
                         arguments(
-                                (Consumer<RootNode>) r -> r.file("a.txt", "a").file("b.txt", "b"),
+                                (NodeGroup) () -> {
+                                    file("a.txt", "a");
+                                    file("b.txt", "b");
+                                },
                                 List.of("a".getBytes(UTF_8), "b".getBytes(UTF_8))),
                         arguments(
-                                (Consumer<RootNode>) r -> r.directory("d", d -> d.file("a.txt", "a")),
+                                (NodeGroup) () -> directory("d", () -> file("a.txt", "a")),
                                 List.of("a".getBytes(UTF_8))),
                         arguments(
-                                (Consumer<RootNode>)
-                                        r -> r.directory("d", d -> d.directory("e", e -> e.file("a", "a"))),
+                                (NodeGroup) () -> directory("d", () -> directory("e", () -> file("a", "a"))),
                                 List.of("a".getBytes(UTF_8))),
-                        arguments(
-                                (Consumer<RootNode>) r -> r.file("a.txt", "a".getBytes(UTF_8)),
-                                List.of("a".getBytes(UTF_8))));
+                        arguments((NodeGroup) () -> file("a.txt", "a".getBytes(UTF_8)), List.of("a".getBytes(UTF_8))));
             }
         }
     }
