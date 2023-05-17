@@ -1,1 +1,1 @@
-# 🏭: Zip Mold
+# 🏭 Zip Mold
