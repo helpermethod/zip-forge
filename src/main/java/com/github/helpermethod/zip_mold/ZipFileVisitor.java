@@ -14,27 +14,22 @@ class ZipFileVisitor implements Visitor {
 
     @Override
     public void visit(FileNode file) throws IOException {
-        zipOutputStream.putNextEntry(new ZipEntry(file.name()));
+        zipOutputStream.putNextEntry(new ZipEntry(file.path()));
         zipOutputStream.write(file.content());
     }
 
     @Override
     public void visit(DirectoryNode directory) throws IOException {
-        zipOutputStream.putNextEntry(new ZipEntry(directory.name()));
+        if (!isRootNode(directory)) {
+            zipOutputStream.putNextEntry(new ZipEntry(directory.path()));
+        }
 
         for (Node node : directory.children()) {
             node.accept(this);
         }
     }
 
-    @Override
-    public void visit(RootNode rootNode) throws IOException {
-        for (Node node : rootNode.children()) {
-            node.accept(this);
-        }
-    }
-
-    private static boolean isRoot(DirectoryNode directory) {
-        return directory.name().isEmpty();
+    private static boolean isRootNode(DirectoryNode directory) {
+        return directory.path().isEmpty();
     }
 }

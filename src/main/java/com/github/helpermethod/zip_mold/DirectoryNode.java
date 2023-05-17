@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class DirectoryNode implements Node {
-
     private final String path;
     private final List<Node> children = new ArrayList<>();
 
@@ -17,25 +15,16 @@ public class DirectoryNode implements Node {
         this.path = path;
     }
 
-    public DirectoryNode file(String name, String content) {
-        return file(name, content.getBytes(UTF_8));
+    public void file(String path, String content) {
+        file(path, content.getBytes(UTF_8));
     }
 
-    public DirectoryNode file(String name, byte[] content) {
-        children.add(new FileNode(this.path + name, content));
-
-        return this;
+    public void file(String path, byte[] content) {
+        children.add(new FileNode(path, content));
     }
 
-    public DirectoryNode directory(String name, Consumer<DirectoryNode> block) {
-        String path = this.path + (name.endsWith("/") ? name : name + "/");
-
-        DirectoryNode zipParentNode = new DirectoryNode(path);
-        block.accept(zipParentNode);
-
-        children.add(zipParentNode);
-
-        return this;
+    public void directory(DirectoryNode directory) {
+        children.add(directory);
     }
 
     @Override
@@ -43,7 +32,7 @@ public class DirectoryNode implements Node {
         visitor.visit(this);
     }
 
-    String name() {
+    public String path() {
         return path;
     }
 

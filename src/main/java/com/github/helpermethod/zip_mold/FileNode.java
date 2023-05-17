@@ -3,7 +3,6 @@ package com.github.helpermethod.zip_mold;
 import java.io.IOException;
 
 class FileNode implements Node {
-
     private final String path;
     private final byte[] content;
 
@@ -17,7 +16,7 @@ class FileNode implements Node {
         visitor.visit(this);
     }
 
-    String name() {
+    public String path() {
         return path;
     }
 
