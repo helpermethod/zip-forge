@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
@@ -30,4 +32,4 @@ jobs:
             17
           cache: maven
       - name: Build
-        run: ./mvnw verify --no-transfer-progress
+        run: SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} ./mvnw --no-transfer-progress verify sonar:sonar
