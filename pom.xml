@@ -7,7 +7,7 @@
     <version>${revision}</version>
 
     <name>${project.artifactId}</name>
-    <description>A Java DSL for declaratively creating ZIP files</description>
+    <description>A Java DSL for creating ZIP files</description>
     <url>https://github.com/helpermethod/zip-forge</url>
 
     <licenses>
