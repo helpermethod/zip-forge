@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.helpermethod</groupId>
-    <artifactId>zip-mold</artifactId>
+    <artifactId>zip-forge</artifactId>
     <version>${revision}</version>
 
     <name>${project.artifactId}</name>
     <description>A Java DSL for declaratively creating ZIP files</description>
-    <url>https://github.com/helpermethod/zip-mold</url>
+    <url>https://github.com/helpermethod/zip-forge</url>
 
     <licenses>
         <license>
@@ -38,8 +38,10 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.testRelease>${java.testVersion}</maven.compiler.testRelease>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <repository.url>git@github.com:helpermethod/zip-mold.git</repository.url>
+        <repository.url>git@github.com:helpermethod/zip-forge.git</repository.url>
         <revision>1.0.0-SNAPSHOT</revision>
+        <sonar.organization>helpermethod</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -64,6 +66,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.9.1.2184</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -148,7 +155,6 @@
                                     <maven-central>
                                         <active>ALWAYS</active>
                                         <url>https://s01.oss.sonatype.org/service/local</url>
-                                        ;
                                         <closeRepository>false</closeRepository>
                                         <releaseRepository>false</releaseRepository>
                                         <stagingRepositories>target/staging-deploy</stagingRepositories>
@@ -158,6 +164,25 @@
                         </deploy>
                     </jreleaser>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
