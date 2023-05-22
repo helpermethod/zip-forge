@@ -1,4 +1,4 @@
-package com.github.helpermethod.zip_mold;
+package io.github.helpermethod.zip_forge;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,10 +7,10 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.zip.ZipOutputStream;
 
-public class ZipMold {
+public class ZipForge {
     static final ThreadLocal<Deque<DirectoryNode>> nodeDeque = ThreadLocal.withInitial(ArrayDeque::new);
 
-    private ZipMold() {}
+    private ZipForge() {}
 
     public static Path createZipFile(Path path, NodeGroup nodeGroup) throws IOException {
         DirectoryNode rootNode = new DirectoryNode("");

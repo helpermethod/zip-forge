@@ -1,4 +1,4 @@
-package com.github.helpermethod.zip_mold;
+package io.github.helpermethod.zip_forge;
 
 import java.io.IOException;
 import java.util.zip.ZipEntry;
