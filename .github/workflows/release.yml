@@ -6,7 +6,7 @@ on:
         description: Release version
         required: true
 jobs:
-  build:
+  release:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out repository
@@ -22,4 +22,4 @@ jobs:
             17
           cache: maven
       - name: Build
-        run: SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} ./mvnw --no-transfer-progress deploy -Prelease
+        run: SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} ./mvnw --no-transfer-progress -Prelease deploy jreleaser:full-release
