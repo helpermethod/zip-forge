@@ -1,5 +1,6 @@
 package io.github.helpermethod.zip_forge;
 
+import static io.github.helpermethod.zip_forge.ZipForge.createZipFile;
 import static io.github.helpermethod.zip_forge.ZipForge.directory;
 import static io.github.helpermethod.zip_forge.ZipForge.file;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -35,7 +36,7 @@ class ZipForgeTest {
                 NodeGroup nodeGroup, List<String> entries, @TempDir Path tempDir) throws IOException {
             var location = tempDir.resolve("test.zip");
 
-            ZipForge.createZipFile(location, nodeGroup);
+            createZipFile(location, nodeGroup);
 
             try (var zipFile = new ZipFile(location.toFile())) {
                 assertThat(zipFile.stream()).extracting("name").isEqualTo(entries);
@@ -48,7 +49,7 @@ class ZipForgeTest {
                 NodeGroup nodeGroup, List<byte[]> fileContents, @TempDir Path tempDir) throws IOException {
             var location = tempDir.resolve("test.zip");
 
-            ZipForge.createZipFile(location, nodeGroup);
+            createZipFile(location, nodeGroup);
 
             try (var zipFile = new ZipFile(location.toFile())) {
                 var contents = zipFile.stream()
