@@ -162,6 +162,14 @@
                                 </nexus2>
                             </maven>
                         </deploy>
+                        <release>
+                            <github>
+                                <changelog>
+                                    <formatted>ALWAYS</formatted>
+                                    <preset>conventional-commits</preset>
+                                </changelog>
+                            </github>
+                        </release>
                     </jreleaser>
                 </configuration>
             </plugin>
