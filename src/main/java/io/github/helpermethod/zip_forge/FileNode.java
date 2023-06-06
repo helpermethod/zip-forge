@@ -1,12 +1,14 @@
 package io.github.helpermethod.zip_forge;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
 
 class FileNode implements Node {
-    private final String path;
-    private final byte[] content;
+    private final Path path;
+    private final InputStream content;
 
-    FileNode(String path, byte[] content) {
+    FileNode(Path path, InputStream content) {
         this.path = path;
         this.content = content;
     }
@@ -16,11 +18,11 @@ class FileNode implements Node {
         visitor.visit(this);
     }
 
-    public String path() {
+    Path path() {
         return path;
     }
 
-    byte[] content() {
+    InputStream content() {
         return content;
     }
 }

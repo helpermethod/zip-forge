@@ -1,25 +1,29 @@
 package io.github.helpermethod.zip_forge;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class DirectoryNode implements Node {
-    private final String path;
+    private final Path path;
     private final List<Node> children = new ArrayList<>();
+    private final boolean root;
 
-    DirectoryNode(String path) {
+    DirectoryNode() {
+        this.path = Paths.get("");
+        this.root = true;
+    }
+
+    DirectoryNode(Path path) {
         this.path = path;
+        this.root = false;
     }
 
-    public void file(String path, String content) {
-        file(path, content.getBytes(UTF_8));
-    }
-
-    public void file(String path, byte[] content) {
+    public void file(Path path, InputStream content) {
         children.add(new FileNode(path, content));
     }
 
@@ -32,11 +36,15 @@ public class DirectoryNode implements Node {
         visitor.visit(this);
     }
 
-    public String path() {
+    Path path() {
         return path;
     }
 
     List<Node> children() {
         return Collections.unmodifiableList(children);
+    }
+
+    boolean isRoot() {
+        return root;
     }
 }
