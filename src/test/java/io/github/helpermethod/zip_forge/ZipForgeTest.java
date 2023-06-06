@@ -1,8 +1,6 @@
 package io.github.helpermethod.zip_forge;
 
-import static io.github.helpermethod.zip_forge.ZipForge.createZipFile;
-import static io.github.helpermethod.zip_forge.ZipForge.directory;
-import static io.github.helpermethod.zip_forge.ZipForge.file;
+import static io.github.helpermethod.zip_forge.ZipForge.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.function.Predicate.not;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,16 +69,28 @@ class ZipForgeTest {
             @Override
             public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
                 return Stream.of(
-                        arguments((NodeGroup) () -> file("a.txt", "a"), List.of("a.txt")),
+                        arguments(
+                                (NodeGroup) () -> {
+                                    file("a.txt", "a");
+                                },
+                                List.of("a.txt")),
                         arguments(
                                 (NodeGroup) () -> {
                                     file("a.txt", "a");
                                     file("b.txt", "b");
                                 },
                                 List.of("a.txt", "b.txt")),
-                        arguments((NodeGroup) () -> directory("d", () -> {}), List.of("d/")),
+                        arguments(
+                                (NodeGroup) () -> {
+                                    directory("d", () -> {});
+                                },
+                                List.of("d/")),
                         arguments((NodeGroup) () -> directory("d/", () -> {}), List.of("d/")),
-                        arguments((NodeGroup) () -> directory("d", () -> file("a.txt", "a")), List.of("d/", "d/a.txt")),
+                        arguments(
+                                (NodeGroup) () -> directory("d", () -> {
+                                    file("a.txt", "a");
+                                }),
+                                List.of("d/", "d/a.txt")),
                         arguments(
                                 (NodeGroup) () -> directory("d", () -> {
                                     file("a.txt", "a");
@@ -88,25 +98,29 @@ class ZipForgeTest {
                                 }),
                                 List.of("d/", "d/a.txt", "d/b.txt")),
                         arguments(
-                                (NodeGroup) () -> directory("d", () -> directory("e", () -> file("a.txt", "a"))),
+                                (NodeGroup) () -> directory("d", () -> {
+                                    directory("e", () -> {
+                                        file("a.txt", "a");
+                                    });
+                                }),
                                 List.of("d/", "d/e/", "d/e/a.txt")),
                         arguments(
-                                (NodeGroup) () -> directory(
-                                        "d",
-                                        () -> directory("e", () -> {
-                                            file("a.txt", "a");
-                                            file("b.txt", "b");
-                                        })),
+                                (NodeGroup) () -> directory("d", () -> {
+                                    directory("e", () -> {
+                                        file("a.txt", "a");
+                                        file("b.txt", "b");
+                                    });
+                                }),
                                 List.of("d/", "d/e/", "d/e/a.txt", "d/e/b.txt")),
                         arguments(
                                 (NodeGroup) () -> {
                                     file("a.txt", "a");
-                                    directory(
-                                            "d",
-                                            () -> directory("e", () -> {
-                                                file("b.txt", "b");
-                                                file("c.txt", "c");
-                                            }));
+                                    directory("d", () -> {
+                                        directory("e", () -> {
+                                            file("b.txt", "b");
+                                            file("c.txt", "c");
+                                        });
+                                    });
                                 },
                                 List.of("a.txt", "d/", "d/e/", "d/e/b.txt", "d/e/c.txt")),
                         arguments(
@@ -120,7 +134,8 @@ class ZipForgeTest {
                                     directory("d", () -> {});
                                     directory("e", () -> {});
                                 },
-                                List.of("d/", "e/")));
+                                List.of("d/", "e/")),
+                        arguments((NodeGroup) () -> {}, List.of()));
             }
         }
 
@@ -136,12 +151,27 @@ class ZipForgeTest {
                                 },
                                 List.of("a".getBytes(UTF_8), "b".getBytes(UTF_8))),
                         arguments(
-                                (NodeGroup) () -> directory("d", () -> file("a.txt", "a")),
+                                (NodeGroup) () -> {
+                                    directory("d", () -> {
+                                        file("a.txt", "a");
+                                    });
+                                },
                                 List.of("a".getBytes(UTF_8))),
                         arguments(
-                                (NodeGroup) () -> directory("d", () -> directory("e", () -> file("a", "a"))),
+                                (NodeGroup) () -> {
+                                    directory("d", () -> {
+                                        directory("e", () -> {
+                                            file("a", "a");
+                                        });
+                                    });
+                                },
                                 List.of("a".getBytes(UTF_8))),
-                        arguments((NodeGroup) () -> file("a.txt", "a".getBytes(UTF_8)), List.of("a".getBytes(UTF_8))));
+                        arguments(
+                                (NodeGroup) () -> {
+                                    file("a.txt", "a".getBytes(UTF_8));
+                                },
+                                List.of("a".getBytes(UTF_8))),
+                        arguments((NodeGroup) () -> {}, List.of()));
             }
         }
     }

@@ -1,41 +1,49 @@
 package io.github.helpermethod.zip_forge;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.zip.ZipOutputStream;
+import java.net.URI;
+import java.nio.file.*;
+import java.util.*;
 
 public class ZipForge {
-    static final ThreadLocal<Deque<DirectoryNode>> nodeDeque = ThreadLocal.withInitial(ArrayDeque::new);
+    private static final ThreadLocal<Deque<DirectoryNode>> nodeDeque = ThreadLocal.withInitial(ArrayDeque::new);
 
-    private ZipForge() {}
+    private ZipForge() {
+    }
 
     public static Path createZipFile(Path path, NodeGroup nodeGroup) throws IOException {
-        DirectoryNode rootNode = new DirectoryNode("");
+        DirectoryNode rootNode = new DirectoryNode();
 
-        nodeDeque.get().addLast(rootNode);
+        try {
+            nodeDeque.get().addLast(rootNode);
+            nodeGroup.addNodes();
+        } finally {
+            nodeDeque.remove();
+        }
 
-        nodeGroup.addNodes();
+        Map<String, String> env = new HashMap<>();
+        env.put("create", "true");
 
-        try (ZipOutputStream zipOutputStream = new ZipOutputStream(Files.newOutputStream(path))) {
-            new ZipFileVisitor(zipOutputStream).visit(nodeDeque.get().removeLast());
+        try (FileSystem zipFileSystem = FileSystems.newFileSystem(URI.create("jar:" + path.toUri()), env)) {
+            new ZipFileVisitor(zipFileSystem).visit(rootNode);
         }
 
         return path;
     }
 
     public static void file(String name, String content) {
-        nodeDeque.get().getLast().file(path(name), content);
+        file(name, content.getBytes(UTF_8));
     }
 
     public static void file(String name, byte[] content) {
-        nodeDeque.get().getLast().file(path(name), content);
+        nodeDeque.get().getLast().file(path(name), new ByteArrayInputStream(content));
     }
 
     public static void directory(String name, NodeGroup nodeGroup) {
-        DirectoryNode directoryNode = new DirectoryNode(path(name.replaceFirst("([^/])$", "$1/")));
+        DirectoryNode directoryNode = new DirectoryNode(path(name));
         nodeDeque.get().getLast().directory(directoryNode);
 
         nodeDeque.get().addLast(directoryNode);
@@ -43,7 +51,7 @@ public class ZipForge {
         nodeDeque.get().removeLast();
     }
 
-    private static String path(String name) {
-        return nodeDeque.get().getLast().path() + name;
+    private static Path path(String name) {
+        return nodeDeque.get().getLast().path().resolve(name);
     }
 }
