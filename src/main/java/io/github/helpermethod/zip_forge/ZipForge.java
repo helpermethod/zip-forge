@@ -11,8 +11,7 @@ import java.util.*;
 public class ZipForge {
     private static final ThreadLocal<Deque<DirectoryNode>> nodeDeque = ThreadLocal.withInitial(ArrayDeque::new);
 
-    private ZipForge() {
-    }
+    private ZipForge() {}
 
     public static Path createZipFile(Path path, NodeGroup nodeGroup) throws IOException {
         DirectoryNode rootNode = new DirectoryNode();
