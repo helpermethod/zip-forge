@@ -29,7 +29,9 @@ jobs:
       - name: Cache Sonar
         uses: actions/cache@v3
         with:
-          path: ~/.sonar/cache
+          path: |
+            ~/.m2/build-cache
+            ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Build
