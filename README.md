@@ -6,7 +6,7 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=io.github.helpermethod%3Azip-forge&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=io.github.helpermethod%3Azip-forge)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=io.github.helpermethod%3Azip-forge&metric=coverage)](https://sonarcloud.io/summary/new_code?id=io.github.helpermethod%3Azip-forge)
 
-A formatter-friendly Java DSL for creating ZIP files.
+A concise, formatter-friendly Java DSL for creating ZIP files.
 
 # :hammer_and_wrench: Installation
 
