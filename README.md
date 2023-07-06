@@ -8,7 +8,7 @@
 
 A concise, formatter-friendly Java DSL for creating ZIP files.
 
-# :hammer_and_wrench: Installation
+# :hammer_and_wrench: Setup
 
 ## Maven
 
