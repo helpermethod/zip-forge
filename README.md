@@ -10,7 +10,7 @@ A small, formatter-friendly Java DSL for creating ZIP files.
 
 # :sparkles: Features
 
-* :pinching_hand: Small
+### :pinching_hand: Small
 
 The whole ZIP Forge API consists of only 3 methods.
 
