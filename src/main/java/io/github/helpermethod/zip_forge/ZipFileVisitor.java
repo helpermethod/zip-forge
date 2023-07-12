@@ -2,7 +2,9 @@ package io.github.helpermethod.zip_forge;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.*;
+import java.nio.file.FileSystem;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 class ZipFileVisitor implements Visitor {
 

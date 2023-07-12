@@ -1,6 +1,8 @@
 package io.github.helpermethod.zip_forge;
 
-import static io.github.helpermethod.zip_forge.ZipForge.*;
+import static io.github.helpermethod.zip_forge.ZipForge.createZipFile;
+import static io.github.helpermethod.zip_forge.ZipForge.directory;
+import static io.github.helpermethod.zip_forge.ZipForge.file;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.function.Predicate.not;
 import static org.assertj.core.api.Assertions.assertThat;
