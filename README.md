@@ -55,22 +55,7 @@ implementation("io.github.helpermethod:zip-forge:0.1.0")
 
 ## Java
 
-Call `ZipForge.createZipFile` to create a ZIP file at the designated location.
-
-```java
-import java.nio.charset.StandardCharsets;
-
-import static io.github.helpermethod.zip_forge.ZipForge.createZipFile;
-
-class ZipForgeDemo {
-    public static void main(String[] args) {
-        // creates an empty ZIP file
-        createZipFile(Paths.get("/home/helpermethod/demo.zip"), () -> {});
-    }
-}
-```
-
-Use the `ZipForge.file` method to add files to the ZIP file. The file content can be a `String` or a `byte[]`.
+An example is worth a thousand words.
 
 ```java
 import java.nio.charset.StandardCharsets;
@@ -82,31 +67,18 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 class ZipForgeDemo {
     public static void main(String[] args) {
+        // creates a ZIP file named demo.zip in the /home/helpermethod directory
         createZipFile(Paths.get("/home/helpermethod/demo.zip"), () -> {
-            file("a.txt", "a");
-        });
-    }
-}
-```
-
-The `ZipForge.directory` method adds directories to the ZIP file and can itself contain `file` or `directory` invocations.
-
-```java
-import java.nio.charset.StandardCharsets;
-
-import static io.github.helpermethod.zip_forge.ZipForge.createZipFile;
-import static io.github.helpermethod.zip_forge.ZipForge.file;
-import static io.github.helpermethod.zip_forge.ZipForge.directory;
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-class ZipForgeDemo {
-    public static void main(String[] args) {
-        createZipFile(Paths.get("/home/helpermethod/demo.zip"), () -> {
+            // file content can be specified as a String...
             file("a.txt", "a");
             directory("d", () -> {
+                // ... or a byte[]
                 file("b.txt", "b".getBytes(UTF_8));
                 file("c.txt", "c");
-                directory("e", () -> file("f.txt", "f"));
+                // directories can be nested
+                directory("e", () -> {
+                    file("f.txt", "f")
+                });
             });
         });
     }
