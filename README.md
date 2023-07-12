@@ -16,16 +16,16 @@ The whole ZIP Forge API consists of only 3 methods.
 
 ## :clipboard: Formatter-friendly
 
-In contrast to other DSLs, applying a code formatter like [palantir-java-format](https://github.com/palantir/palantir-java-format)
-will not mess up ZIP Forge's indentation.
+Contrary to other DSLs, applying a code formatter like [palantir-java-format](https://github.com/palantir/palantir-java-format)
+will not mess up ZIP Forge's indentation and structure.
 
 ## :package: No external dependencies
 
-ZIP Forge is based on Java's [ZIP Files System Provider](https://docs.oracle.com/javase/8/docs/technotes/guides/io/fsp/zipfilesystemprovider.html) and requires no other external dependencies.
+ZIP Forge is based on Java's [ZIP Files System Provider](https://docs.oracle.com/javase/8/docs/technotes/guides/io/fsp/zipfilesystemprovider.html) and requires no external dependencies.
 
 ## :older_man: Works with Java 8 and above
 
-ZIP Forge makes use of features available since Java 8.
+ZIP Forge only users features available since Java 8.
 
 # :hammer_and_wrench: Installation
 
