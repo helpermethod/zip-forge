@@ -77,7 +77,7 @@ class ZipForgeDemo {
                 file("c.txt", "c");
                 // directories can be nested
                 directory("e", () -> {
-                    file("f.txt", "f")
+                    file("f.txt", "f");
                 });
             });
         });
