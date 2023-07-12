@@ -70,7 +70,7 @@ class ZipForgeDemo {
 }
 ```
 
-Use the `file` method to add files to the ZIP file. The file content can be a `String` or a `byte[]`.
+Use the `ZipForge.file` method to add files to the ZIP file. The file content can be a `String` or a `byte[]`.
 
 ```java
 import java.nio.charset.StandardCharsets;
@@ -89,7 +89,7 @@ class ZipForgeDemo {
 }
 ```
 
-The `directory` method adds directories to the ZIP file and can itself contain `file` or `directory` invocations.
+The `ZipForge.directory` method adds directories to the ZIP file and can itself contain `file` or `directory` invocations.
 
 ```java
 import java.nio.charset.StandardCharsets;
