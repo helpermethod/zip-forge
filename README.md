@@ -6,22 +6,22 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=io.github.helpermethod%3Azip-forge&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=io.github.helpermethod%3Azip-forge)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=io.github.helpermethod%3Azip-forge&metric=coverage)](https://sonarcloud.io/summary/new_code?id=io.github.helpermethod%3Azip-forge)
 
-A small, formatter-friendly Java DSL for creating ZIP files.
+A tiny, formatter-friendly Java DSL for creating ZIP files.
 
 # :sparkles: Features
 
-## :pinching_hand: Small
+## :pinching_hand: Tiny
 
 The whole ZIP Forge API consists of only 3 methods.
 
 ## :clipboard: Formatter-friendly
 
 Contrary to other DSLs, applying a code formatter like [palantir-java-format](https://github.com/palantir/palantir-java-format)
-will not mess up ZIP Forge's indentation and structure.
+will not mess up ZIP Forge's indentation.
 
 ## :package: No external dependencies
 
-ZIP Forge is based on Java's [ZIP Files System Provider](https://docs.oracle.com/javase/8/docs/technotes/guides/io/fsp/zipfilesystemprovider.html) and requires no external dependencies.
+ZIP Forge is based on Java's [ZIP File System Provider](https://docs.oracle.com/javase/8/docs/technotes/guides/io/fsp/zipfilesystemprovider.html) and requires no external dependencies.
 
 ## :older_man: Works with Java 8 and above
 
@@ -69,7 +69,7 @@ class ZipForgeDemo {
     public static void main(String[] args) {
         // creates a ZIP file named demo.zip in the /home/helpermethod directory
         createZipFile(Paths.get("/home/helpermethod/demo.zip"), () -> {
-            // file content can be specified as a String...
+            // the file content can be specified as a String...
             file("a.txt", "a");
             directory("d", () -> {
                 // ... or a byte[]
@@ -112,13 +112,10 @@ import io.github.helpermethod.zip_forge.ZipForge.file
 import kotlin.io.path.Path
 
 createZipFile(Path("/home/helpermethod/demo.zip")) {
-    // a file's content can be a String ...
     file("a.txt", "a")
     directory("d") {
-        // ... or a byte[]
         file("b.txt", "b".toByteArray())
         file("c.txt", "c")
-        // directories can be nested
         directory("e") {
             file("f.txt", "f")
         }
