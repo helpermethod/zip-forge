@@ -74,7 +74,7 @@ class ZipForgeDemo {
                 // ... or a byte[]
                 file("b.txt", "b".getBytes(UTF_8));
                 file("c.txt", "c");
-                // directories can contain files or other directories
+                // directories can be nested
                 directory("e", () -> {
                     file("f.txt", "f");
                 });
