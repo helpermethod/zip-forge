@@ -102,7 +102,7 @@ Archive:  demo.zip
 
 ## Kotlin
 
-The same example as above written in Kotlin. Note that it uses the same API as the Java code snippet.
+The same example as above written in Kotlin. Note that it uses the same API as the Java version.
 
 ```kotlin
 import io.github.helpermethod.zip_forge.ZipForge.createZipFile
