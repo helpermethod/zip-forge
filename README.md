@@ -52,7 +52,7 @@ implementation("io.github.helpermethod:zip-forge:0.1.0")
 ## Java
 
 The following code snippet calls `createZipFile` to create the ZIP file
-at the given location
+at the given location.
 It uses the `file` and `directory` methods to create files and
 directories within the context of the `createZipFile` method.
 
@@ -106,7 +106,7 @@ Archive:  demo.zip
 
 ## Kotlin
 
-The same example as above written in Kotlin.
+The same example as above written in Kotlin. Note that it uses the same API as the Java code snippet.
 
 ```kotlin
 import io.github.helpermethod.zip_forge.ZipForge.createZipFile
