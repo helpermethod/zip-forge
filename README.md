@@ -51,7 +51,14 @@ implementation("io.github.helpermethod:zip-forge:0.1.0")
 
 ## Java
 
-An example is worth a thousand words.
+The following code snippet calls `createZipFile` to create the ZIP file
+at the given location
+It uses the `file` and `directory` methods to create files and
+directories within the context of the `createZipFile` method.
+
+The file content can be specified as a `String` or `byte[]`.
+
+`directory`s can themselves contain directories or files.
 
 ```java
 import java.nio.charset.StandardCharsets;
@@ -99,7 +106,7 @@ Archive:  demo.zip
 
 ## Kotlin
 
-The same example written in Kotlin.
+The same example as above written in Kotlin.
 
 ```kotlin
 import io.github.helpermethod.zip_forge.ZipForge.createZipFile
