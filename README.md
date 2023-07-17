@@ -47,7 +47,7 @@ implementation 'io.github.helpermethod:zip-forge:0.1.0'
 implementation("io.github.helpermethod:zip-forge:0.1.0")
 ```
 
-# :gear: Usage
+# :mag: Usage
 
 ## Java
 
