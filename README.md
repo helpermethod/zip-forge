@@ -12,7 +12,7 @@ A tiny, formatter-friendly Java DSL for creating ZIP files.
 
 ## :pinching_hand: Tiny
 
-The whole ZIP Forge API consists of only 3 methods.
+The ZIP Forge API consists of only 3 methods.
 
 ## :clipboard: Formatter-friendly
 
