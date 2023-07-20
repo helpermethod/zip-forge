@@ -4,11 +4,16 @@ import static io.github.helpermethod.zip_forge.ZipForge.createZipFile;
 import static io.github.helpermethod.zip_forge.ZipForge.directory;
 import static io.github.helpermethod.zip_forge.ZipForge.file;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.function.Predicate.not;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,6 +22,7 @@ import java.util.zip.ZipFile;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -45,7 +51,7 @@ class ZipForgeTest {
 
         @ArgumentsSource(ZipFileContents.class)
         @ParameterizedTest
-        void shoud_create_a_zip_file_with_correct_contents(
+        void should_create_a_zip_file_with_correct_contents(
                 NodeGroup nodeGroup, List<byte[]> fileContents, @TempDir Path tempDir) throws IOException {
             var location = tempDir.resolve("test.zip");
 
@@ -64,6 +70,24 @@ class ZipForgeTest {
                         .toList();
 
                 assertThat(contents).containsExactlyElementsOf(fileContents);
+            }
+        }
+
+        @Test
+        void should_support_large_files(@TempDir Path tempDir) throws IOException {
+            var largeFile = tempDir.resolve("large-file.bin");
+
+            try (var twoGigaByteFile = Files.newByteChannel(largeFile, CREATE_NEW, WRITE)) {
+                long fourGigaBytesInBytes = 2L * 1024L * 1024L * 1024L;
+
+                twoGigaByteFile.position(fourGigaBytesInBytes - 1);
+                twoGigaByteFile.write(ByteBuffer.wrap(new byte[] {0}));
+            }
+
+            var location = tempDir.resolve("test.zip");
+
+            try (var twoGigaByteFile = Files.newInputStream(largeFile)) {
+                assertThat(createZipFile(location, () -> file("a.bin", twoGigaByteFile))).exists();
             }
         }
 
@@ -137,7 +161,10 @@ class ZipForgeTest {
                                     directory("e", () -> {});
                                 },
                                 List.of("d/", "e/")),
-                        arguments((NodeGroup) () -> {}, List.of()));
+                        arguments((NodeGroup) () -> {}, List.of()),
+                        arguments(
+                                (NodeGroup) () -> file("a", new ByteArrayInputStream("a".getBytes(UTF_8))),
+                                List.of("a")));
             }
         }
 
@@ -173,7 +200,10 @@ class ZipForgeTest {
                                     file("a.txt", "a".getBytes(UTF_8));
                                 },
                                 List.of("a".getBytes(UTF_8))),
-                        arguments((NodeGroup) () -> {}, List.of()));
+                        arguments((NodeGroup) () -> {}, List.of()),
+                        arguments(
+                                (NodeGroup) () -> file("a", new ByteArrayInputStream("a".getBytes(UTF_8))),
+                                List.of("a".getBytes(UTF_8))));
             }
         }
     }
