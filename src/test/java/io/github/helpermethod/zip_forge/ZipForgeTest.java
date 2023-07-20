@@ -87,7 +87,8 @@ class ZipForgeTest {
             var location = tempDir.resolve("test.zip");
 
             try (var twoGigaByteFile = Files.newInputStream(largeFile)) {
-                assertThat(createZipFile(location, () -> file("a.bin", twoGigaByteFile))).exists();
+                assertThat(createZipFile(location, () -> file("a.bin", twoGigaByteFile)))
+                        .exists();
             }
         }
 
