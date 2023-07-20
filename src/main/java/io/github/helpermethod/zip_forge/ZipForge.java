@@ -4,6 +4,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
@@ -43,7 +44,11 @@ public class ZipForge {
     }
 
     public static void file(String name, byte[] content) {
-        nodeDeque.get().getLast().file(path(name), new ByteArrayInputStream(content));
+        file(name, new ByteArrayInputStream(content));
+    }
+
+    public static void file(String name, InputStream content) {
+        nodeDeque.get().getLast().file(path(name), content);
     }
 
     public static void directory(String name, NodeGroup nodeGroup) {
