@@ -7,20 +7,20 @@
     <version>${revision}</version>
 
     <name>${project.artifactId}</name>
-    <description>A Java DSL for creating ZIP files</description>
+    <description>A tiny, formatter-friendly Java DSL for creating ZIP files.</description>
     <url>https://github.com/helpermethod/zip-forge</url>
 
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
 
     <developers>
         <developer>
             <name>Oliver Weiler</name>
-            <email>oliver@sdkman.io</email>
+            <email>wo6980@gmail.com</email>
         </developer>
     </developers>
 
