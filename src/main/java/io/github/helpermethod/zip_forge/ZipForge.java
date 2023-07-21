@@ -4,11 +4,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -20,7 +17,7 @@ public class ZipForge {
     private ZipForge() {}
 
     public static Path createZipFile(Path path, NodeGroup nodeGroup) throws IOException {
-        DirectoryNode rootNode = new DirectoryNode();
+        DirectoryNode rootNode = new DirectoryNode(Paths.get(""));
 
         try {
             nodeDeque.get().addLast(rootNode);
@@ -44,11 +41,15 @@ public class ZipForge {
     }
 
     public static void file(String name, byte[] content) {
-        file(name, new ByteArrayInputStream(content));
+        nodeDeque.get().getLast().file(path(name), new ByteArrayInputStream(content));
     }
 
-    public static void file(String name, InputStream content) {
-        nodeDeque.get().getLast().file(path(name), content);
+    public static void file(String name, Path content) {
+        try {
+            nodeDeque.get().getLast().file(path(name), Files.newInputStream(content));
+        } catch (IOException e) {
+            throw new ZipForgeException(e);
+        }
     }
 
     public static void directory(String name, NodeGroup nodeGroup) {

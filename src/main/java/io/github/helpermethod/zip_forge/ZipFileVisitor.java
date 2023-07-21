@@ -23,9 +23,7 @@ class ZipFileVisitor implements Visitor {
 
     @Override
     public void visit(DirectoryNode directory) throws IOException {
-        if (!directory.isRoot()) {
-            Files.createDirectories(zipFileSystem.getPath(directory.path().toString()));
-        }
+        Files.createDirectories(zipFileSystem.getPath(directory.path().toString()));
 
         for (Node node : directory.children()) {
             node.accept(this);
