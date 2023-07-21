@@ -8,9 +8,9 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.function.Predicate.not;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
@@ -70,25 +70,6 @@ class ZipForgeTest {
                         .toList();
 
                 assertThat(contents).containsExactlyElementsOf(fileContents);
-            }
-        }
-
-        @Test
-        void should_support_large_files(@TempDir Path tempDir) throws IOException {
-            var largeFile = tempDir.resolve("large-file.bin");
-
-            try (var twoGigaByteFile = Files.newByteChannel(largeFile, CREATE_NEW, WRITE)) {
-                long fourGigaBytesInBytes = 2L * 1024L * 1024L * 1024L;
-
-                twoGigaByteFile.position(fourGigaBytesInBytes - 1);
-                twoGigaByteFile.write(ByteBuffer.wrap(new byte[] {0}));
-            }
-
-            var location = tempDir.resolve("test.zip");
-
-            try (var twoGigaByteFile = Files.newInputStream(largeFile)) {
-                assertThat(createZipFile(location, () -> file("a.bin", twoGigaByteFile)))
-                        .exists();
             }
         }
 
@@ -162,10 +143,7 @@ class ZipForgeTest {
                                     directory("e", () -> {});
                                 },
                                 List.of("d/", "e/")),
-                        arguments((NodeGroup) () -> {}, List.of()),
-                        arguments(
-                                (NodeGroup) () -> file("a", new ByteArrayInputStream("a".getBytes(UTF_8))),
-                                List.of("a")));
+                        arguments((NodeGroup) () -> {}, List.of()));
             }
         }
 
@@ -201,11 +179,33 @@ class ZipForgeTest {
                                     file("a.txt", "a".getBytes(UTF_8));
                                 },
                                 List.of("a".getBytes(UTF_8))),
-                        arguments((NodeGroup) () -> {}, List.of()),
-                        arguments(
-                                (NodeGroup) () -> file("a", new ByteArrayInputStream("a".getBytes(UTF_8))),
-                                List.of("a".getBytes(UTF_8))));
+                        arguments((NodeGroup) () -> {}, List.of()));
             }
+        }
+    }
+
+    @Nested
+    class File {
+        @Test
+        void should_support_large_files(@TempDir Path tempDir) throws IOException {
+            var largeFile = tempDir.resolve("large-file.bin");
+
+            try (var twoGigaByteFile = Files.newByteChannel(largeFile, CREATE_NEW, WRITE)) {
+                long fourGigaBytesInBytes = 2L * 1024L * 1024L * 1024L;
+
+                twoGigaByteFile.position(fourGigaBytesInBytes - 1);
+                twoGigaByteFile.write(ByteBuffer.wrap(new byte[] {0}));
+            }
+
+            assertThat(createZipFile(tempDir.resolve("test.zip"), () -> file("a.bin", largeFile)))
+                    .exists();
+        }
+
+        @Test
+        void should_throw_an_exception_if_the_path_does_not_exist(@TempDir Path tempDir) throws IOException {
+            assertThatThrownBy(() -> createZipFile(tempDir.resolve("test.zip"), () -> file("a.bin", Path.of("a.bin"))))
+                    .isInstanceOf(ZipForgeException.class)
+                    .hasMessage("java.nio.file.NoSuchFileException: a.bin");
         }
     }
 }
