@@ -71,12 +71,13 @@ class ZipForgeDemo {
             // the file content can be specified as a String...
             file("a.txt", "a");
             directory("d", () -> {
-                // ... or a byte[]
+                // ... or a byte[]...
                 file("b.txt", "b".getBytes(UTF_8));
                 file("c.txt", "c");
                 // directories can be nested
                 directory("e", () -> {
-                    file("f.txt", "f");
+                    // ... or a Path
+                    file("f.bin", Paths.get("f.bin"));
                 });
             });
         });
