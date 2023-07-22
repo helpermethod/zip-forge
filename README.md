@@ -117,7 +117,7 @@ createZipFile(Path("/home/helpermethod/demo.zip")) {
         file("b.txt", "b".toByteArray())
         file("c.txt", "c")
         directory("e") {
-            file("f.txt", "f")
+            file("f.bin", Path("f"))
         }
     }
 }
