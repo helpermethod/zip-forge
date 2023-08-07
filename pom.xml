@@ -72,6 +72,11 @@
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>3.9.1.2184</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -205,16 +210,27 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Automatic-Module-Name>io.github.helpermethod.zip_forge</Automatic-Module-Name>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
+                <groupId>org.moditect</groupId>
+                <artifactId>moditect-maven-plugin</artifactId>
+                <version>1.0.0.Final</version>
+                <executions>
+                    <execution>
+                        <id>add-module-info</id>
+                        <goals>
+                            <goal>add-module-info</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <module>
+                                <moduleInfo>
+                                    <name>io.github.helpermethod.zip_forge</name>
+                                    <exports>io.github.helpermethod.zip_forge</exports>
+                                </moduleInfo>
+                            </module>
+                            <overwriteExistingFiles>true</overwriteExistingFiles>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
