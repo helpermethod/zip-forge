@@ -111,13 +111,15 @@ import io.github.helpermethod.zip_forge.ZipForge.directory
 import io.github.helpermethod.zip_forge.ZipForge.file
 import kotlin.io.path.Path
 
-createZipFile(Path("/home/helpermethod/demo.zip")) {
-    file("a.txt", "a")
-    directory("d") {
-        file("b.txt", "b".toByteArray())
-        file("c.txt", "c")
-        directory("e") {
-            file("f.bin", Path("f.bin"))
+fun main() {
+    createZipFile(Path("/home/helpermethod/demo.zip")) {
+        file("a.txt", "a")
+        directory("d") {
+            file("b.txt", "b".toByteArray())
+            file("c.txt", "c")
+            directory("e") {
+                file("f.bin", Path("f.bin"))
+            }
         }
     }
 }
