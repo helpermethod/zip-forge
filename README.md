@@ -25,7 +25,7 @@ ZIP Forge is based on Java's [ZIP File System Provider](https://docs.oracle.com/
 
 ## :jigsaw: Modular
 
-ZIP Forge is published as a Java 9 module while still compatible with Java 8.
+ZIP Forge is published as a Java 9 module while still being compatible with Java 8.
 
 # :hammer_and_wrench: Installation
 
