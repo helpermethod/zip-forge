@@ -77,11 +77,11 @@ class ZipForgeDemo {
             directory("d", () -> {
                 // ... or a byte[]...
                 file("b.txt", "b".getBytes(UTF_8));
-                file("c.txt", "c");
+                // ... or a Path
+                file("c.bin", Paths.get("c.bin"));
                 // directories can be nested
                 directory("e", () -> {
-                    // ... or a Path
-                    file("f.bin", Paths.get("f.bin"));
+                    file("f.txt", "f");
                 });
             });
         });
@@ -99,8 +99,8 @@ Archive:  demo.zip
         0  07-11-2023 15:39   d/e/
         1  07-11-2023 15:39   a.txt
         1  07-11-2023 15:39   d/b.txt
-        1  07-11-2023 15:39   d/c.txt
-        1  07-11-2023 15:39   d/e/f.bin
+        1  07-11-2023 15:39   d/c.bin
+        1  07-11-2023 15:39   d/e/f.txt
 ---------                     -------
         4                     6 files
 ```
@@ -120,9 +120,9 @@ fun main() {
         file("a.txt", "a")
         directory("d") {
             file("b.txt", "b".toByteArray())
-            file("c.txt", "c")
+            file("c.bin", Path("c.bin"))
             directory("e") {
-                file("f.bin", Path("f.bin"))
+                file("f.txt", "f")
             }
         }
     }
