@@ -69,7 +69,7 @@ import static io.github.helpermethod.zip_forge.ZipForge.directory;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 class ZipForgeDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // creates a ZIP file named demo.zip in the /home/helpermethod directory
         createZipFile(Paths.get("/home/helpermethod/demo.zip"), () -> {
             // the file content can be specified as a String...
