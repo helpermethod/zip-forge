@@ -63,9 +63,9 @@ It uses the `file` and `directory` methods to create files and directories withi
 ```java
 import java.nio.charset.StandardCharsets;
 
-import static io.github.helpermethod.zip_forge.ZipForge.createZipFile;
-import static io.github.helpermethod.zip_forge.ZipForge.file;
-import static io.github.helpermethod.zip_forge.ZipForge.directory;
+import static io.github.helpermethod.zipforge.ZipForge.createZipFile;
+import static io.github.helpermethod.zipforge.ZipForge.file;
+import static io.github.helpermethod.zipforge.ZipForge.directory;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 class ZipForgeDemo {
@@ -110,9 +110,9 @@ Archive:  demo.zip
 The same example written in Kotlin. Note that it uses the same API as the Java version.
 
 ```kotlin
-import io.github.helpermethod.zip_forge.ZipForge.createZipFile
-import io.github.helpermethod.zip_forge.ZipForge.directory
-import io.github.helpermethod.zip_forge.ZipForge.file
+import io.github.helpermethod.zipforge.ZipForge.createZipFile
+import io.github.helpermethod.zipforge.ZipForge.directory
+import io.github.helpermethod.zipforge.ZipForge.file
 import kotlin.io.path.Path
 
 fun main() {

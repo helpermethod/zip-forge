@@ -223,8 +223,8 @@
                         <configuration>
                             <module>
                                 <moduleInfo>
-                                    <name>io.github.helpermethod.zip_forge</name>
-                                    <exports>io.github.helpermethod.zip_forge</exports>
+                                    <name>io.github.helpermethod.zipforge</name>
+                                    <exports>io.github.helpermethod.zipforge</exports>
                                 </moduleInfo>
                             </module>
                             <overwriteExistingFiles>true</overwriteExistingFiles>
