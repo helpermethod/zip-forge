@@ -1,4 +1,4 @@
-package io.github.helpermethod.zip_forge;
+package io.github.helpermethod.zipforge;
 
 import static io.github.helpermethod.zip_forge.ZipForge.createZipFile;
 import static io.github.helpermethod.zip_forge.ZipForge.directory;
