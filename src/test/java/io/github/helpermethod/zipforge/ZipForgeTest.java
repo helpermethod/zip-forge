@@ -1,8 +1,8 @@
-package io.github.helpermethod.zip_forge;
+package io.github.helpermethod.zipforge;
 
-import static io.github.helpermethod.zip_forge.ZipForge.createZipFile;
-import static io.github.helpermethod.zip_forge.ZipForge.directory;
-import static io.github.helpermethod.zip_forge.ZipForge.file;
+import static io.github.helpermethod.zipforge.ZipForge.createZipFile;
+import static io.github.helpermethod.zipforge.ZipForge.directory;
+import static io.github.helpermethod.zipforge.ZipForge.file;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static java.nio.file.StandardOpenOption.WRITE;
