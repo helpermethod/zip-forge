@@ -24,7 +24,7 @@ jobs:
           distribution: temurin
           java-version: |
             8
-            17
+            21
           cache: maven
       - name: Cache Sonar
         uses: actions/cache@v3
