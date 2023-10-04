@@ -33,7 +33,7 @@
 
     <properties>
         <java.version>8</java.version>
-        <java.testVersion>17</java.testVersion>
+        <java.testVersion>21</java.testVersion>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.testRelease>${java.testVersion}</maven.compiler.testRelease>
@@ -134,7 +134,9 @@
                 <version>2.40.0</version>
                 <configuration>
                     <java>
-                        <palantirJavaFormat/>
+                        <palantirJavaFormat>
+                            <version>2.38.0</version>
+                        </palantirJavaFormat>
                     </java>
                     <pom>
                         <sortPom>
