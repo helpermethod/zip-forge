@@ -134,7 +134,9 @@
                 <version>2.40.0</version>
                 <configuration>
                     <java>
-                        <palantirJavaFormat/>
+                        <palantirJavaFormat>
+                            <version>2.38.0</version>
+                        </palantirJavaFormat>
                     </java>
                     <pom>
                         <sortPom>
