@@ -191,9 +191,9 @@ class ZipForgeTest {
             var largeFile = tempDir.resolve("large-file.bin");
 
             try (var twoGigaByteFile = Files.newByteChannel(largeFile, CREATE_NEW, WRITE)) {
-                long fourGigaBytesInBytes = 2L * 1024L * 1024L * 1024L;
+                long twoGigaBytesInBytes = 2L * 1024L * 1024L * 1024L;
 
-                twoGigaByteFile.position(fourGigaBytesInBytes - 1);
+                twoGigaByteFile.position(twoGigaBytesInBytes - 1);
                 twoGigaByteFile.write(ByteBuffer.wrap(new byte[] {0}));
             }
 
