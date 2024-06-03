@@ -57,7 +57,7 @@ implementation("io.github.helpermethod:zip-forge:1.0.0")
 The following code snippet calls `createZipFile` to create the ZIP file at the given location.
 It uses the `file` and `directory` methods to create files and directories within the context of the ZIP file.
 
-⚠️ `file` and `directory` should never be used outside of `createZipFile`'s or `directory`'s context.
+> [!WARNING] `file` and `directory` should never be used outside of `createZipFile`'s or `directory`'s context.
 
 ```java
 import java.nio.charset.StandardCharsets;
