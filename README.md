@@ -34,20 +34,20 @@ ZIP Forge is published as a Java 9 module but compatible with Java 8.
 <dependency>
     <groupId>io.github.helpermethod</groupId>
     <artifactId>zip-forge</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 ## Gradle
 
 ```groovy
-implementation 'io.github.helpermethod:zip-forge:1.0.0'
+implementation 'io.github.helpermethod:zip-forge:1.0.1'
 ```
 
 ## Gradle (Kotlin)
 
 ```kotlin
-implementation("io.github.helpermethod:zip-forge:1.0.0")
+implementation("io.github.helpermethod:zip-forge:1.0.1")
 ```
 
 # :mag: Usage
