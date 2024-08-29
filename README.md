@@ -16,7 +16,7 @@ The ZIP Forge API consists of only 3 methods.
 
 ## :clipboard: Formatter-friendly
 
-Applying a code formatter like [palantir-java-format](https://github.com/palantir/palantir-java-format) will not mess up ZIP Forge's indentation.
+Applying a code formatter like [palantir-java-format](https://github.com/palantir/palantir-java-format) won't mess up ZIP Forge's indentation.
 
 ## :package: No external dependencies
 
