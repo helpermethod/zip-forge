@@ -32,8 +32,8 @@
     </scm>
 
     <properties>
-        <java.version>8</java.version>
-        <java.testVersion>21</java.testVersion>
+        <java.version>17</java.version>
+        <java.testVersion>25</java.testVersion>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.testRelease>${java.testVersion}</maven.compiler.testRelease>
@@ -134,9 +134,7 @@
                 <version>3.0.0</version>
                 <configuration>
                     <java>
-                        <palantirJavaFormat>
-                            <version>2.38.0</version>
-                        </palantirJavaFormat>
+                        <palantirJavaFormat/>
                     </java>
                     <pom>
                         <sortPom>
