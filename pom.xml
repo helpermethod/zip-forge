@@ -34,8 +34,7 @@
     <properties>
         <java.version>17</java.version>
         <java.testVersion>25</java.testVersion>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
         <maven.compiler.testRelease>${java.testVersion}</maven.compiler.testRelease>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <repository.url>git@github.com:helpermethod/zip-forge.git</repository.url>
@@ -210,29 +209,6 @@
                             <formats>
                                 <format>XML</format>
                             </formats>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.moditect</groupId>
-                <artifactId>moditect-maven-plugin</artifactId>
-                <version>1.3.0.Final</version>
-                <executions>
-                    <execution>
-                        <id>add-module-info</id>
-                        <goals>
-                            <goal>add-module-info</goal>
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                            <module>
-                                <moduleInfo>
-                                    <name>io.github.helpermethod.zipforge</name>
-                                    <exports>io.github.helpermethod.zipforge</exports>
-                                </moduleInfo>
-                            </module>
-                            <overwriteExistingFiles>true</overwriteExistingFiles>
                         </configuration>
                     </execution>
                 </executions>
