@@ -24,6 +24,7 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.support.ParameterDeclarations;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -75,7 +76,7 @@ class ZipForgeTest {
 
         static class ZipFileEntries implements ArgumentsProvider {
             @Override
-            public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+            public Stream<? extends Arguments> provideArguments(ParameterDeclarations parameters, ExtensionContext context) {
                 return Stream.of(
                         arguments(
                                 (NodeGroup) () -> {
