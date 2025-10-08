@@ -29,4 +29,4 @@ jobs:
           JRELEASER_NEXUS2_USERNAME: ${{ secrets.JRELEASER_NEXUS2_USERNAME }}
           JRELEASER_NEXUS2_PASSWORD: ${{ secrets.JRELEASER_NEXUS2_PASSWORD }}
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./mvnw --no-transfer-progress -Prelease -Drevision=${{ inputs.version }} deploy jreleaser:full-release
+        run: ./mvnw --no-transfer-progress -Prelease -Drevision=${{ github.event.inputs.version }} deploy jreleaser:full-release
