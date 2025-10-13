@@ -18,15 +18,15 @@ jobs:
         with:
           distribution: zulu
           java-version: |
-            8
-            21
+            17
+            25
           cache: maven
       - name: Build
         env:
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.JRELEASER_GPG_PUBLIC_KEY }}
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.JRELEASER_GPG_SECRET_KEY }}
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
-          JRELEASER_NEXUS2_USERNAME: ${{ secrets.JRELEASER_NEXUS2_USERNAME }}
-          JRELEASER_NEXUS2_PASSWORD: ${{ secrets.JRELEASER_NEXUS2_PASSWORD }}
+          JRELEASER_MAVEN_CENTRAL_USERNAME: ${{ secrets.JRELEASER_MAVEN_CENTRAL_USERNAME }}
+          JRELEASER_MAVEN_CENTRAL_TOKEN: ${{ secrets.JRELEASER_MAVEN_CENTRAL_TOKEN }}
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw --no-transfer-progress -Prelease -Drevision=${{ github.event.inputs.version }} deploy jreleaser:full-release
