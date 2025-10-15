@@ -138,13 +138,13 @@
                         <deploy>
                             <maven>
                                 <mavenCentral>
-                                    <sonaType>
+                                    <sonatype>
                                         <active>ALWAYS</active>
                                         <url>https://central.sonatype.com/api/v1/publisher</url>
                                         <closeRepository>true</closeRepository>
                                         <releaseRepository>true</releaseRepository>
                                         <stagingRepositories>target/staging-deploy</stagingRepositories>
-                                    </sonaType>
+                                    </sonatype>
                                 </mavenCentral>
                             </maven>
                         </deploy>
