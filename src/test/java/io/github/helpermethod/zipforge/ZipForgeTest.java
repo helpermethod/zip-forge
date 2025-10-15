@@ -33,10 +33,8 @@ import org.junit.jupiter.params.support.ParameterDeclarations;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class ZipForgeTest {
-
     @Nested
     class CreateZipFile {
-
         @ArgumentsSource(ZipFileEntries.class)
         @ParameterizedTest
         void should_create_a_zip_file_with_correct_entries(
