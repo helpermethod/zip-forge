@@ -20,7 +20,7 @@ ZIP Forge is based on Java's [ZIP File System Provider](https://docs.oracle.com/
 
 ## :jigsaw: Modular
 
-ZIP Forge is published as a Java 9 module but compatible with Java 8.
+ZIP Forge is published as a Java 9 module.
 
 # :hammer_and_wrench: Installation
 
@@ -30,20 +30,20 @@ ZIP Forge is published as a Java 9 module but compatible with Java 8.
 <dependency>
     <groupId>io.github.helpermethod</groupId>
     <artifactId>zip-forge</artifactId>
-    <version>1.0.1</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
 ## Gradle
 
 ```groovy
-implementation 'io.github.helpermethod:zip-forge:1.0.1'
+implementation 'io.github.helpermethod:zip-forge:2.0.0'
 ```
 
 ## Gradle (Kotlin)
 
 ```kotlin
-implementation("io.github.helpermethod:zip-forge:1.0.1")
+implementation("io.github.helpermethod:zip-forge:2.0.0")
 ```
 
 # :mag: Usage
