@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class DirectoryNode implements Node {
@@ -33,6 +32,6 @@ public class DirectoryNode implements Node {
     }
 
     List<Node> children() {
-        return Collections.unmodifiableList(children);
+        return List.copyOf(children);
     }
 }

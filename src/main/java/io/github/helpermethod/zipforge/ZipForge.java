@@ -5,14 +5,12 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ZipForge {
@@ -21,7 +19,7 @@ public class ZipForge {
     private ZipForge() {}
 
     public static Path createZipFile(Path path, NodeGroup nodeGroup) throws IOException {
-        DirectoryNode rootNode = new DirectoryNode(Paths.get(""));
+        var rootNode = new DirectoryNode(Paths.get(""));
 
         try {
             nodeDeque.get().addLast(rootNode);
@@ -30,10 +28,8 @@ public class ZipForge {
             nodeDeque.remove();
         }
 
-        Map<String, String> env = new HashMap<>();
-        env.put("create", "true");
-
-        try (FileSystem zipFileSystem = FileSystems.newFileSystem(URI.create("jar:" + path.toUri()), env)) {
+        try (var zipFileSystem =
+                FileSystems.newFileSystem(URI.create("jar:" + path.toUri()), Map.of("create", "true"))) {
             new ZipFileVisitor(zipFileSystem).visit(rootNode);
         }
 
@@ -57,7 +53,7 @@ public class ZipForge {
     }
 
     public static void directory(String name, NodeGroup nodeGroup) {
-        DirectoryNode directoryNode = new DirectoryNode(path(name));
+        var directoryNode = new DirectoryNode(path(name));
         nodeDeque.get().getLast().directory(directoryNode);
 
         nodeDeque.get().addLast(directoryNode);

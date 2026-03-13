@@ -1,7 +1,6 @@
 package io.github.helpermethod.zipforge;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -16,7 +15,7 @@ class ZipFileVisitor implements Visitor {
 
     @Override
     public void visit(FileNode file) throws IOException {
-        try (InputStream content = file.content()) {
+        try (var content = file.content()) {
             Files.copy(content, zipFileSystem.getPath(file.path().toString()), StandardCopyOption.REPLACE_EXISTING);
         }
     }
@@ -25,7 +24,7 @@ class ZipFileVisitor implements Visitor {
     public void visit(DirectoryNode directory) throws IOException {
         Files.createDirectories(zipFileSystem.getPath(directory.path().toString()));
 
-        for (Node node : directory.children()) {
+        for (var node : directory.children()) {
             node.accept(this);
         }
     }
